@@ -54,15 +54,17 @@
                         <label for="no_telp">No Telepon</label>
                         <input type="text" class="form-control" name="no_telp" id="no_telp" placeholder="No Telepon" required>
                     </div>
+                    <input type="hidden" name="harga" id="harga_raw" required>
                     <div class="form-group">
-                        <label for="harga">Harga</label>
-                        <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga" required>
+                        <label for="harga_formatted">Harga</label>
+                        <!-- Ubah id input harga yang terformat menjadi 'harga_formatted' -->
+                        <input type="text" class="form-control" id="harga_formatted" placeholder="Rp." onkeyup="formatRupiahDanSetHargaAsli(this)" required>
                     </div>
                     <div class="form-group">
                         <label for="produk">Produk</label>
                         <input type="text" class="form-control" name="produk" id="produk" placeholder="Produk" required>
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
@@ -70,5 +72,30 @@
     </div>
     <!--Row-->
 
+    <script>
+        function formatRupiahDanSetHargaAsli(input) {
+            var inputHargaAsli = document.getElementById('harga_raw'); // Dapatkan input harga asli
+            var angka = input.value.replace(/\D/g, ''); // Hapus semua karakter kecuali angka
+            inputHargaAsli.value = angka; // Simpan angka ke input harga asli
 
+            var rupiah = ''; // Variabel untuk menyimpan format rupiah
+            var angkaRev = angka.toString().split('').reverse().join('');
+            for (var i = 0; i < angkaRev.length; i++)
+                if (i % 3 == 0) rupiah += angkaRev.substr(i, 3) + '.';
+            rupiah = rupiah.split('', rupiah.length - 1).reverse().join('');
+
+            input.value = (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
+        // Menambahkan validasi untuk memastikan hanya angka yang diterima
+        document.getElementById('harga_formatted').addEventListener('input', function(event) {
+            var inputValue = event.target.value;
+
+            // Hapus karakter selain angka dan titik
+            inputValue = inputValue.replace(/[^0-9.]+/g, '');
+
+            // Set nilai input
+            event.target.value = inputValue;
+        });
+    </script>
     @endsection

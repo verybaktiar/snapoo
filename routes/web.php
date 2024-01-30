@@ -23,8 +23,8 @@ Route::get('dashboard', 'App\Http\Controllers\DashboardController@index');
 Route::get('pelanggan', 'App\Http\Controllers\PelangganController@index');
 Route::get('pelanggan/create', 'App\Http\Controllers\PelangganController@create');
 Route::post('pelanggan/store', 'App\Http\Controllers\PelangganController@store');
-Route::get('pelanggan/{nama}/edit', 'App\Http\Controllers\PelangganController@edit');
-Route::put('pelanggan/{nama}', 'App\Http\Controllers\PelangganController@update');
+Route::get('pelanggan/edit/{nama}', 'App\Http\Controllers\PelangganController@edit');
+Route::post('pelanggan/{nama}', 'App\Http\Controllers\PelangganController@update');
 
 
 Route::get('pelanggan/delete/{nama}', 'App\Http\Controllers\PelangganController@destroy');

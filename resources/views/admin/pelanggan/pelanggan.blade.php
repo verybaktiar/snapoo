@@ -38,11 +38,11 @@
                             <td>{{ $pelanggan->nama }}</td>
                             <td>{{ $pelanggan->email }}</td>
                             <td>{{ $pelanggan->no_telp }}</td>
-                            <td>{{ $pelanggan->harga }}</td>
+                            <td>Rp. {{ number_format($pelanggan->harga, ($pelanggan->harga % 1 == 0) ? 0 : 2, ',', '.') }}</td>
                             <td>{{ $pelanggan->produk }}</td>
                             <td>
-                                <a href="/pelanggan/{{ $pelanggan->nama }}/edit" class="btn btn-warning">Edit</a>
-
+                               
+                                <a href="{{ url('pelanggan/edit/'.$pelanggan->nama) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ url('pelanggan/delete/'.$pelanggan->nama) }}" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Paket Ini?')">Hapus</a>
                             </td>
                         </tr>

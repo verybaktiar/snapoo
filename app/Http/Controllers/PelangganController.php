@@ -64,38 +64,25 @@ class PelangganController extends Controller
         return redirect()->to('pelanggan')->with('success', 'Berhasil menambahkan data');
     }
 
-    public function edit($id)
+    public function edit($nama)
     {
-        $pelanggan = pelanggan::find($id);
+        $pelanggan = DB::table('pelanggan')->where('nama', $nama)->first();
+
         return view('admin.pelanggan.edit', compact('pelanggan'));
     }
     
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $nama)
     {
-        $request->validate([
-            'nama' => 'required',
-            'email' => 'required',
-            'no_telp' => 'required',
-            'harga' => 'required',
-            'produk' => 'required',
-        ], [
-            'nama.required' => 'nama wajib diisi',
-            'email.required' => 'email wajib diisi',
-            'no_telp.required' => 'no_telp wajib diisi',
-            'harga.required' => 'harga wajib diisi',
-            'produk.required' => 'produk wajib diisi',
-        ]);
-
-        $data = [
+       DB::table('pelanggan')->where('nama', $nama)
+            ->update([
             'nama' => $request->nama,
             'email' => $request->email,
             'no_telp' => $request->no_telp,
             'harga' => $request->harga,
             'produk' => $request->produk,
-        ];
+        ]);
 
-        pelanggan::find($id)->update($data);
         return redirect()->to('pelanggan')->with('success', 'Berhasil mengubah data');
 
     }

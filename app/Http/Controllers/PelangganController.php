@@ -130,6 +130,6 @@ class PelangganController extends Controller
 
     public function exportexcel()
     {
-        return Excel::download(new PelangganExport, 'siswa.xlsx');
+        return Excel::download(new PelangganExport, 'pelanggan.xlsx');
     }
 }

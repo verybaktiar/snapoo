@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Imports;
+
 use App\Models\Pelanggan;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class pelangganImport implements ToModel
+class PelangganImport implements ToModel
 {
     /**
     * @param array $row
@@ -19,7 +21,7 @@ class pelangganImport implements ToModel
             'no_telp'    => $row[2],
             'harga'    => $row[3],
             'produk'    => $row[4],
-            
+           
         ]);
     }
 }

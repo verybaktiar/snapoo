@@ -41,15 +41,11 @@
                             <td>{{ $pelanggan->harga }}</td>
                             <td>{{ $pelanggan->produk }}</td>
                             <td>
-                                <a href="/pelanggan/{{ $pelanggan->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="/pelanggan/{{ $pelanggan->id }}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin?')">Delete</button>
-                                </form>
+                                <a href="/pelanggan/{{ $pelanggan->nama }}/edit" class="btn btn-warning">Edit</a>
+
+                                <a href="{{ url('pelanggan/delete/'.$pelanggan->nama) }}" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Paket Ini?')">Hapus</a>
                             </td>
                         </tr>
-
                         </tr>
                         @endforeach
                     </th>
@@ -67,11 +63,12 @@
                                 </button>
                             </div>
                             <form action="/pelanggan/importexcel" method="POST" enctype="multipart/form-data">
+                           {{ csrf_field() }}
                                 <div class="modal-body">
-                                    @csrf
+
                                     <div class="form-group">
                                         <label for="excelFile">Pilih File Excel</label>
-                                        <input type="file" class="form-control-file" id="excelFile" name="excelFile" required>
+                                        <input type="file" class="form-control-file" id="file" name="file" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

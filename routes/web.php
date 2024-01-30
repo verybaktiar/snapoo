@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('welcome', 'App\Http\Controllers\HomeController@index');
 
@@ -23,12 +23,14 @@ Route::get('dashboard', 'App\Http\Controllers\DashboardController@index');
 Route::get('pelanggan', 'App\Http\Controllers\PelangganController@index');
 Route::get('pelanggan/create', 'App\Http\Controllers\PelangganController@create');
 Route::post('pelanggan/store', 'App\Http\Controllers\PelangganController@store');
-Route::get('pelanggan/{id}/edit', 'App\Http\Controllers\PelangganController@edit');
-Route::put('pelanggan/{id}', 'App\Http\Controllers\PelangganController@update');
-Route::delete('pelanggan/{id}', 'App\Http\Controllers\PelangganController@destroy');
+Route::get('pelanggan/{nama}/edit', 'App\Http\Controllers\PelangganController@edit');
+Route::put('pelanggan/{nama}', 'App\Http\Controllers\PelangganController@update');
+
+
+Route::get('pelanggan/delete/{nama}', 'App\Http\Controllers\PelangganController@destroy');
 Route::get('pelanggan/exportexcel', 'App\Http\Controllers\PelangganController@exportExcel');
 Route::get('pelanggan/exportpdf', 'App\Http\Controllers\PelangganController@exportPdf');
-Route::post('pelanggan/importexcel', 'App\Http\Controllers\PelangganController@importExcel');
+Route::post('pelanggan/importexcel', 'App\Http\Controllers\PelangganController@pelangganimportExcel');
 
 
 

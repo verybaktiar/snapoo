@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\DB;
 
 
 use App\Exports\PelangganExport;
+use App\Exports\PelangganExport2;
+use App\Exports\PelangganExport3;
+use App\Exports\PelangganExport4;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\pelanggan;
 use Illuminate\Support\Facades\Session;
 use App\Imports\PelangganImport;
@@ -94,30 +99,37 @@ class PelangganController extends Controller
         return redirect()->to('pelanggan')->with('success', 'Berhasil mengubah data');
 
     }
-        public function importExcel(Request $request)
-        {
-            $request->validate([
-                'excelFile' => 'required|mimes:xls,xlsx'
-            ]);
 
-            $file = $request->file('excelFile');
-            $nama_file = rand() . $file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
-
-            Excel::import(new PelangganImport, public_path('/file_excel/' . $nama_file));
-            return redirect()->to('pelanggan')->with('success', 'Berhasil mengupload data');
+    public function destroy($nama)
+    {
+        DB::table('pelanggan')->where('nama', $nama)->delete();
+        return redirect()->to('pelanggan')->with('success', 'Berhasil menghapus data');
     }
 
-    public function importexcel(Request $request)
+    
+    public function pelangganimportexcel(Request $request)
 
     {
 
             $data = $request->file('file');
             $namafile = $data->getClientOriginalName();
-            $data->move('pelangganImport', $namafile);
-            Excel::import(new pelangganImport, public_path('/pelangganImport/' . $namafile));
+            $data->move('file_excel', $namafile);
+            Excel::import(new PelangganImport, public_path('/file_excel/' . $namafile));
             return redirect()->back()->with('success', 'Data Berhasil Diimport!');
 
 
+    }
+
+    public function exportpdf()
+    {
+        $data = Pelanggan::all();
+        view()->share('data',$data);
+        $pdf = PDF::loadview('pelanggan.exportpdf');
+        return $pdf->download('pelanggan.pdf');
+    }
+
+    public function exportexcel()
+    {
+        return Excel::download(new PelangganExport, 'siswa.xlsx');
     }
 }

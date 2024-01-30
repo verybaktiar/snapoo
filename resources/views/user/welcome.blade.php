@@ -217,30 +217,49 @@
                 </div>
                 <div class="row">
                     @foreach($produk as $product)
-                        <div class="col-xl-4 col-lg-4 col-md-6">
-                            <div class="single-place mb-30">
-                                <div class="card card-product card-body p-lg-4 p3">
-                                    <img src="{{ asset('images/' . $product->gambar) }}" alt="" class="img-fluid">
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="single-place mb-30">
+                            <div class="card card-product card-body p-lg-4 p3">
+                                <img src="{{ asset('images/' . $product->gambar) }}" alt="" class="img-fluid">
+                            </div>
+                            <div class="place-cap">
+                                <div class="place-cap-top">
+                                    <span><i class="fas fa-star"></i><span>8.0 Superb</span> </span>
+                                    <h3><a href="#" data-toggle="modal" data-target="#reservationModal{{$product->id}}">{{$product->nama_paket}}</a></h3>
                                 </div>
-                                <div class="place-cap">
-                                    <div class="place-cap-top">
-                                        <span><i class="fas fa-star"></i><span>8.0 Superb</span> </span>
-                                        <h3><a href="#">{{$product->nama_paket}}</a></h3>
-                                        <p class="dolor">{{$product->harga}}<span>/ Per Person</span></p>
-                                    </div>
-                                    <div class="place-cap-bottom">
-                                        <ul>
-                                            <li><i class="far fa-clock"></i>3 Days</li>
-                                            <li><i class="fas fa-map-marker-alt"></i>Los Angeles</li>
-                                        </ul>
-                                    </div>
+                                <div class="place-cap-bottom">
+                                    <ul>
+                                        <li><i class="far fa-clock"></i>3 Days</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>Los Angeles</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <!-- Reservation Modal -->
+                    <div class="modal fade" id="reservationModal{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel{{$product->id}}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reservationModalLabel{{$product->id}}">Reservation Form</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Add your reservation form here -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </div>
-                </div>
             </div>
+        </div>
         </div>
         <!-- Favourite Places End -->
         <!-- Video Start Arera -->

@@ -247,7 +247,30 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <!-- Add your reservation form here -->
+                                    <!-- Service Extras Options -->
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2 border bg-light">
+                                            Tambahan Orang - Rp20,000 <input type="number" class="ml-2" data-price="20000" value="1">
+                                        </div>
+                                        <div class="p-2 border bg-light">
+                                            Projected Background - Rp30,000 <input type="number" class="ml-2" data-price="30000" value="1">
+                                        </div>
+                                        <div class="p-2 border bg-light">
+                                            Pet / Hewan peliharaan - Rp30,000 <input type="number" class="ml-2" data-price="30000" value="1">
+                                        </div>
+                                    </div>
+                                    <!-- Summary -->
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-2">SUMMARY</h6>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Basic Snap</span>
+                                            <span id="basicSnapPrice">Rp75,000</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <strong>Total Price</strong>
+                                            <strong id="totalPrice">Rp0</strong>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -256,6 +279,7 @@
                             </div>
                         </div>
                     </div>
+
                     @endforeach
                 </div>
             </div>
@@ -546,6 +570,71 @@
     <script src="{{asset('user/./assets/js/jquery.ajaxchimp.min.js')}}"></script>
     <script src="{{asset('user/./assets/js/plugins.js')}}"></script>
     <script src="{{asset('user/./assets/js/main.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            const modal = $('#reservationModal{{$product->id}}');
+
+            function updateTotalPrice() {
+                let totalPrice = 0;
+
+                // Mengumpulkan semua input dan menghitung total harga
+                modal.find('.modal-body input[type=number]').each(function() {
+                    const price = parseInt($(this).data('price'));
+                    totalPrice += ($(this).valAsNumber || 0) * price;
+                });
+
+                // Memperbarui teks total harga
+                $('#totalPrice').text(`Rp${totalPrice.toLocaleString('id-ID')}`);
+            }
+
+            // Event ketika modal ditampilkan
+            modal.on('show.bs.modal', function() {
+                // Mengosongkan nilai input
+                modal.find('.modal-body input[type=number]').val('');
+
+                // Memastikan total harga diatur ke 0 saat modal ditampilkan
+                $('#totalPrice').text('Rp0');
+
+                // Mengupdate total harga
+                updateTotalPrice();
+            });
+
+            // Menambahkan event listener ke setiap input untuk mengupdate total harga ketika jumlah diubah
+            modal.find('.modal-body input[type=number]').on('input', updateTotalPrice);
+
+            // Menambahkan event listener untuk tombol 'Submit'
+            modal.find('.btn-primary').on('click', () => {
+                // Logika untuk pengiriman form
+                console.log('Submit clicked');
+                // Di sini Anda akan menangani pengiriman data, mungkin dengan AJAX atau formulir submit
+                // Contoh menggunakan AJAX:
+                /*
+                $.ajax({
+                  url: 'url_to_submit_form_data',
+                  method: 'POST',
+                  data: {
+                    // Data yang akan dikirim
+                  },
+                  success: function(response) {
+                    // Tangani respons setelah berhasil
+                  },
+                  error: function(xhr, status, error) {
+                    // Tangani error
+                  }
+                });
+                */
+            });
+
+            // Menambahkan event listener untuk tombol 'Close'
+            modal.find('.btn-secondary').on('click', () => {
+                // Logika untuk menutup modal
+                console.log('Close clicked');
+                // Tutup modal menggunakan fungsi Bootstrap
+                modal.modal('hide');
+            });
+        });
+    </script>
+
 
 </body>
 

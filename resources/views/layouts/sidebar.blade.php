@@ -13,6 +13,7 @@
                         <li><i class="fa fa-bars"></i><a href="#">Kategori</a></li>
                         <li><i class="fa fa-id-badge"></i><a href="/pelanggan">Data Pelanggan</a></li>
                         <li><i class="fa fa-puzzle-piece"></i><a href="/produk">Data Produk</a></li>
+                        <li><i class="fa fa-id-badge"></i><a href="/services">Data Service</a></li>
                        
                     </ul>
                 </li>

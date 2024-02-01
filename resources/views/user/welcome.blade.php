@@ -25,11 +25,11 @@
                                 </div>
                                 <div class="select-form mb-30">
                                     <div class="select-itms">
-                                        <select name="select" id="select1">
+                                        <select name="paket" id="select1">
                                             <option value="">Pilih Paket</option>
-                                            <option value="">Services-1</option>
-                                            <option value="">Services-2</option>
-                                            <option value="">Services-3</option>
+                                            @foreach ($data as $paket)
+                                            <option value="{{ $paket->id }}">{{ $paket->nama_paket }}</option> <!-- Sesuaikan dengan atribut dari model Paket -->
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                 </div>
             </div>
             <div class="row">
-                @foreach($produk as $product)
+                @foreach($data as $product)
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="single-place mb-30">
                         <div class="card card-product card-body p-lg-4 p3">
@@ -136,35 +136,35 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <!-- Service Extras Card -->
-                                <div class="card">
-                                    <div class="card-body">
-                                        <!-- Additional Person -->
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div>
-                                                <h6 class="card-title mb-0">+ Tambahan Orang</h6>
-                                                <small class="card-text">Tambah orang untuk yang melebihi kapasitas dari paket</small>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <span class="badge badge-secondary mr-2">Rp20,000</span>
-                                                <button class="btn btn-outline-secondary btn-sm">-</button>
-                                                <input type="text" class="form-control form-control-sm mx-2" value="0" style="width: 50px;">
-                                                <button class="btn btn-outline-secondary btn-sm">+</button>
-                                            </div>
-                                        </div>
-                                        <!-- Projected Background -->
-                                        <!-- ... other items ... -->
+                                <!-- Service Extras Options -->
+                                <div class="d-flex flex-column mb-3">
+                                    <div class="p-2 border bg-light">
+                                        Tambahan Orang - Rp20,000 <input type="number" class="ml-2" data-price="20000" value="1">
+                                    </div>
+                                    <div class="p-2 border bg-light">
+                                        Projected Background - Rp30,000 <input type="number" class="ml-2" data-price="30000" value="1">
+                                    </div>
+                                    <div class="p-2 border bg-light">
+                                        Pet / Hewan peliharaan - Rp30,000 <input type="number" class="ml-2" data-price="30000" value="1">
+                                    </div>
+                                </div>
+                                <!-- Summary -->
+                                <div class="d-flex flex-column">
+                                    <h6 class="mb-2">SUMMARY</h6>
+                                    <div class="d-flex justify-content-between">
+                                        <span>{{$product->nama_paket}}</span>
+                                        <span id="basicSnapPrice">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <strong>Total Price</strong>
+                                        <strong id="totalPrice">Rp0</strong>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
-                                <button type="button" class="btn btn-primary">Next Step</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Submit</button>
                             </div>
-                            <!-- <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
-                                </div> -->
                         </div>
                     </div>
                 </div>

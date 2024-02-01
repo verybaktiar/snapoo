@@ -12,8 +12,7 @@ class HomeController extends Controller
 
     public function index()
     {
-
-        $produk = Produk::all();
-        return view('user.welcome', compact('produk'));
+        $data = Produk::all();
+        return view('user.welcome', compact('data'));
     }
 }

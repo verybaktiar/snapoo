@@ -41,4 +41,9 @@ Route::get('produk/edit/{id}', 'App\Http\Controllers\ProdukController@edit');
 Route::post('produk/update', 'App\Http\Controllers\ProdukController@update');
 Route::get('produk/hapus/{id}', 'App\Http\Controllers\ProdukController@hapus');
 
+Route::get('services', 'App\Http\Controllers\ServicesController@index');
+Route::get('services/tambah', 'App\Http\Controllers\ServicesController@tambah');
+Route::post('services/store', 'App\Http\Controllers\ServicesController@store');
+
+
 

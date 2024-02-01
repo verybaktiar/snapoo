@@ -40,9 +40,9 @@
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="about.html">About US</a></li>
-                                        <li><a href="packages.html">Package</a></li>
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="/">About US</a></li>
+                                        <li><a href="/">Package</a></li>
                                         <li><a href="blog.html">Blog</a>
                                             <ul class="submenu">
                                                 <li><a href="blog.html">Blog</a></li>

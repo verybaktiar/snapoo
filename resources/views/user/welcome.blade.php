@@ -136,30 +136,67 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <!-- Service Extras Options -->
                                 <div class="d-flex flex-column mb-3">
-                                    <div class="p-2 border bg-light">
-                                        Tambahan Orang - Rp20,000 <input type="number" class="ml-2" data-price="20000" value="1">
-                                    </div>
-                                    <div class="p-2 border bg-light">
-                                        Projected Background - Rp30,000 <input type="number" class="ml-2" data-price="30000" value="1">
-                                    </div>
-                                    <div class="p-2 border bg-light">
-                                        Pet / Hewan peliharaan - Rp30,000 <input type="number" class="ml-2" data-price="30000" value="1">
-                                    </div>
+                                    <table>
+                                        <tbody>
+                                            @foreach($services as $service)
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="service" value="{{$service->harga}}" onchange="calculateSubtotal()">
+                                                    {{$service->nama_service}} - {{$service->harga}}
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="qty" value="1" min="1" max="10" onchange="calculateSubtotal(this)">
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <!-- Summary -->
-                                <div class="d-flex flex-column">
+                                <div class="d-flex flex-column mb-3">
+
+
                                     <h6 class="mb-2">SUMMARY</h6>
                                     <div class="d-flex justify-content-between">
-                                        <span>{{$product->nama_paket}}</span>
-                                        <span id="basicSnapPrice">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
+                                        <span id="productName">{{$product->nama_paket}}</span>
+                                        <span id="productPrice">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <strong>Total Price</strong>
-                                        <strong id="totalPrice">Rp0</strong>
+                                        <span id="subtotalPrice">Rp0</span>
+                                    </div>
+
+
+                                    <script>
+                                        function calculateSubtotal(input) {
+                                            var checkboxes = document.getElementsByName("service");
+                                            var subtotal = parseFloat(document.getElementById("productPrice").textContent.replace("Rp", "").replace(".", ""));
+
+                                            for (var i = 0; i < checkboxes.length; i++) {
+                                                if (checkboxes[i].checked) {
+                                                    var price = parseFloat(checkboxes[i].value);
+                                                    var qty = parseFloat(checkboxes[i].parentNode.nextElementSibling.querySelector("input[name='qty']").value);
+                                                    subtotal += price * qty;
+                                                }
+                                            }
+
+                                            document.getElementById("subtotalPrice").textContent = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                                        }
+                                    </script>
+
+                                    </tr>
+                                    <div class="d-flex flex-column">
+
+                                        </tr>
+                                        </tbody>
+
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-3">
+
                                     </div>
                                 </div>
+                                <!-- Summary -->
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -168,8 +205,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 @endforeach
             </div>
         </div>

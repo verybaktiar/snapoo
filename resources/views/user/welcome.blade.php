@@ -1,6 +1,7 @@
 @extends('layouts.user.app')
 @section('contents')
 <main>
+
     <!-- slider Area Start-->
     <div class="slider-area ">
         <!-- Mobile Menu -->
@@ -114,7 +115,8 @@
                         <div class="place-cap">
                             <div class="place-cap-top">
                                 <span><i class="fas fa-star"></i><span>8.0 Superb</span> </span>
-                                <h3><a href="#" data-toggle="modal" data-target="#reservationModal{{$product->id}}">{{$product->nama_paket}}</a></h3>
+                                <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button> -->
+                                <h3><a href="#" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">{{$product->nama_paket}}</a></h3>
                             </div>
                             <div class="place-cap-bottom">
                                 <ul>
@@ -125,15 +127,13 @@
                         </div>
                     </div>
                 </div>
-                <!-- Reservation Modal -->
-                <div class="modal fade" id="reservationModal{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel{{$product->id}}" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="reservationModalLabel{{$product->id}}">Reservation Form</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Select Service Extra</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="d-flex flex-column mb-3">
@@ -196,15 +196,115 @@
 
                                     </div>
                                 </div>
-                                <!-- Summary -->
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Submit</button>
+                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">NEXT STEPS</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Pilih Tangga; Reservasi</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class=" form-group <label for=" tanggal">Tanggal</label>
+                                    <input type="text" class="form-control" id="tanggalPicker" name="tanggal" required>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6"></script>
+                <script>
+                    flatpickr("#tanggalPicker", {
+                        dateFormat: "Y-m-d",
+                        inline: true,
+                        onChange: function(selectedDates, dateStr, instance) {
+                            var jamPickerContainer = document.getElementById("jamPickerContainer");
+                            var jamPicker = document.getElementById("jamPicker");
+
+                            // Kosongkan pilihan jam sebelumnya
+                            jamPicker.innerHTML = "";
+
+                            if (selectedDates.length > 0) {
+                                // Tampilkan kontainer pilihan jam
+                                jamPickerContainer.style.display = "block";
+
+                                // Contoh: Tambahkan 10 pilihan jam mulai dari jam 8 pagi hingga jam 5 sore
+                                for (var i = 8; i <= 17; i++) {
+                                    var option = document.createElement("option");
+                                    option.text = i + ":00";
+                                    option.value = i + ":00";
+                                    jamPicker.appendChild(option);
+                                }
+                            } else {
+                                // Sembunyikan kontainer pilihan jam jika tidak ada tanggal yang dipilih
+                                jamPickerContainer.style.display = "none";
+                            }
+                        }
+                    });
+                </script>
+
+
+                <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Isi Form Reservasi</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+
+                                <form action="" method="post">
+
+                                    @csrf
+                                    <div class="form-group
+                                <label for=" nama">Nama</label>
+                                        <input type="text" class="form-control" id="nama" name="nama" required>
+                                    </div>
+                                    <div class="form-group
+                                
+                                <label for=" email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <div class="form-group
+                                    
+                                    <label for=" no_hp">No. HP</label>
+                                        <input type="text" class="form-control" id="no_hp" name="no_hp" required>
+                                    </div>
+                                    <div class="form-group
+
+                                    <label for=" alamat">Alamat</label>
+                                        <input type="text" class="form-control" id="alamat" name="alamat" required>
+
+                                    </div>
+                                    <div class="form-group
+                                        
+                                        <label for=" tanggal">Tanggal</label>
+                                        <input type="text" class="form-control" id="tanggalpicker" name="tanggal" required>
+
+                                    </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 @endforeach
             </div>
         </div>
@@ -384,6 +484,6 @@
         </div>
     </div>
     <!-- Blog Area End -->
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-JU3MR4x4K5+dBsx2JDA4NZLaOg5frN1BKcpTi/YOYTC67J+1zCkXwXPMvtnJwZx" crossorigin="anonymous"></script>
 </main>
 @endsection

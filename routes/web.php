@@ -38,12 +38,29 @@ Route::get('produk', 'App\Http\Controllers\ProdukController@index');
 Route::get('produk/tambah', 'App\Http\Controllers\ProdukController@tambah');
 Route::post('produk/store', 'App\Http\Controllers\ProdukController@store');
 Route::get('produk/edit/{id}', 'App\Http\Controllers\ProdukController@edit');
-Route::post('produk/update', 'App\Http\Controllers\ProdukController@update');
+Route::post('produk/{id}', 'App\Http\Controllers\ProdukController@update');
 Route::get('produk/hapus/{id}', 'App\Http\Controllers\ProdukController@hapus');
 
 Route::get('services', 'App\Http\Controllers\ServicesController@index');
 Route::get('services/tambah', 'App\Http\Controllers\ServicesController@tambah');
 Route::post('services/store', 'App\Http\Controllers\ServicesController@store');
+Route::get('services/edit/{id_services}', 'App\Http\Controllers\ServicesController@edit');
+Route::post('services/update', 'App\Http\Controllers\ServicesController@update');
+Route::get('services/hapus/{id}', 'App\Http\Controllers\ServicesController@hapus');
+
+Route::get('waktu', 'App\Http\Controllers\WaktuController@index');
+Route::get('waktu/tambah', 'App\Http\Controllers\WaktuController@tambah');
+Route::post('waktu/store', 'App\Http\Controllers\WaktuController@store');
+Route::get('waktu/edit/{id}', 'App\Http\Controllers\WaktuController@edit');
+Route::post('waktu/update', 'App\Http\Controllers\WaktuController@update');
+Route::get('waktu/hapus/{id}', 'App\Http\Controllers\WaktuController@hapus');
+Route::get('times/getTimes', 'App\Http\Controllers\timesController@getTimes');
+
+
+Route::get('reservasi', 'App\Http\Controllers\ReservasiController@index');
+Route::post('reservasi', 'App\Http\Controllers\ReservasiController@tambah');
+
+
 
 
 

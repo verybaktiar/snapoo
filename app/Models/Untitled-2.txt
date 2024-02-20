@@ -1,0 +1,120 @@
+ <!-- Reservation Modal -->
+                <div class="modal fade" id="reservationModal{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel{{$product->id}}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="reservationModalLabel{{$product->id}}">Reservation Form</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="d-flex flex-column mb-3">
+                                    <table>
+                                        <tbody>
+                                            @foreach($services as $service)
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="service" value="{{$service->harga}}" onchange="calculateSubtotal()">
+                                                    {{$service->nama_service}} - {{$service->harga}}
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="qty" value="1" min="1" max="10" onchange="calculateSubtotal(this)">
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-flex flex-column mb-3">
+
+
+                                    <h6 class="mb-2">SUMMARY</h6>
+                                    <div class="d-flex justify-content-between">
+                                        <span id="productName">{{$product->nama_paket}}</span>
+                                        <span id="productPrice">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <strong>Total Price</strong>
+                                        <span id="subtotalPrice">Rp0</span>
+                                    </div>
+
+
+                                    <script>
+                                        function calculateSubtotal(input) {
+                                            var checkboxes = document.getElementsByName("service");
+                                            var subtotal = parseFloat(document.getElementById("productPrice").textContent.replace("Rp", "").replace(".", ""));
+
+                                            for (var i = 0; i < checkboxes.length; i++) {
+                                                if (checkboxes[i].checked) {
+                                                    var price = parseFloat(checkboxes[i].value);
+                                                    var qty = parseFloat(checkboxes[i].parentNode.nextElementSibling.querySelector("input[name='qty']").value);
+                                                    subtotal += price * qty;
+                                                }
+                                            }
+
+                                            document.getElementById("subtotalPrice").textContent = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                                        }
+                                    </script>
+
+                                    </tr>
+                                    <div class="d-flex flex-column">
+
+                                        </tr>
+                                        </tbody>
+
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-3">
+
+                                    </div>
+                                </div>
+                                <!-- Summary -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <!-- Tombol "Next" untuk menampilkan modal kedua -->
+                                <button type="button" class="btn btn-primary" onclick="showSecondModal()">Next</button>
+                            </div>
+
+                            <!-- Modal kedua -->
+                            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Isi modal kedua, seperti formulir -->
+                                            <!-- Contoh formulir -->
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                                                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <!-- Tombol untuk kembali ke modal pertama jika diperlukan -->
+                                            <button type="button" class="btn btn-primary" data-bs-target="#reservationModal{{$product->id}}" data-bs-toggle="modal">Kembali ke awal</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                function showSecondModal() {
+                                    var secondModal = new bootstrap.Modal(document.getElementById('exampleModalToggle2'));
+                                    secondModal.show();
+                                }
+                            </script>
+
+                        </div>
+                    </div>
+                </div>

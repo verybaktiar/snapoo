@@ -52,6 +52,6 @@ class ProdukController extends Controller
     {
         $data = Produk::find($id);
         $data->delete();
-        return redirect('produk')->with('pesan', 'Data berhasil dihapus');
+        return redirect('produk')->with('hapus', 'Data berhasil dihapus');
     }
 }

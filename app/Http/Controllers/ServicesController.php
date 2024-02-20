@@ -27,4 +27,27 @@ class ServicesController extends Controller
 
         return redirect('services')->with('pesan', 'Data berhasil ditambahkan');
     }
+
+    public function edit($id_services)
+    {
+        $services = Services::find($id_services);
+        return view('admin.services.edit', compact('services'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $services = Services::find($id);
+        $services->update($request->all());
+
+        return redirect('services')->with('pesan', 'Data berhasil diupdate');
+    }
+
+    public function hapus($id)
+    {
+        $services = Services::find($id);
+        $services->delete();
+        return redirect('services')->with('hapus', 'Data berhasil dihapus');
+    }
+
+
 }

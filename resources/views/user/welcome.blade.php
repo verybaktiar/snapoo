@@ -128,7 +128,7 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="overflow-y: auto;">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -155,7 +155,21 @@
                                 </div>
                                 <div class="d-flex flex-column mb-3">
 
-
+                                    <!-- Tampilkan item yang dipilih -->
+                                    <div class="d-flex flex-column mb-3">
+                                        <h6 class="mb-2">Selected Items</h6>
+                                        <table id="selectedItemsTable" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama Layanan</th>
+                                                    <th>Qty</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Item yang dipilih akan ditampilkan di sini -->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <h6 class="mb-2">SUMMARY</h6>
                                     <div class="d-flex justify-content-between">
                                         <span id="productName">{{$product->nama_paket}}</span>
@@ -165,98 +179,26 @@
                                         <strong>Total Price</strong>
                                         <span id="subtotalPrice">Rp0</span>
                                     </div>
-
-
-                                    <script>
-                                        function calculateSubtotal(input) {
-                                            var checkboxes = document.getElementsByName("service");
-                                            var subtotal = parseFloat(document.getElementById("productPrice").textContent.replace("Rp", "").replace(".", ""));
-
-                                            for (var i = 0; i < checkboxes.length; i++) {
-                                                if (checkboxes[i].checked) {
-                                                    var price = parseFloat(checkboxes[i].value);
-                                                    var qty = parseFloat(checkboxes[i].parentNode.nextElementSibling.querySelector("input[name='qty']").value);
-                                                    subtotal += price * qty;
-                                                }
-                                            }
-
-                                            document.getElementById("subtotalPrice").textContent = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                                        }
-                                    </script>
-
+                                    <!-- Modal "Select Service Extra" -->
                                     </tr>
                                     <div class="d-flex flex-column">
-
                                         </tr>
                                         </tbody>
-
                                     </div>
-
                                     <div class="d-flex flex-column mb-3">
-
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">NEXT STEPS</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Pilih Tangga; Reservasi</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class=" form-group <label for=" tanggal">Tanggal</label>
-                                    <input type="text" class="form-control" id="tanggalPicker" name="tanggal" required>
-                                </div>
-
-                            </div>
-
+                            </div> -->
                             <div class="modal-footer">
-                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Next</button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle2" onclick="copySummaryToNextModal()">NEXT STEPS</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6"></script>
-                <script>
-                    flatpickr("#tanggalPicker", {
-                        dateFormat: "Y-m-d",
-                        inline: true,
-                        onChange: function(selectedDates, dateStr, instance) {
-                            var jamPickerContainer = document.getElementById("jamPickerContainer");
-                            var jamPicker = document.getElementById("jamPicker");
-
-                            // Kosongkan pilihan jam sebelumnya
-                            jamPicker.innerHTML = "";
-
-                            if (selectedDates.length > 0) {
-                                // Tampilkan kontainer pilihan jam
-                                jamPickerContainer.style.display = "block";
-
-                                // Contoh: Tambahkan 10 pilihan jam mulai dari jam 8 pagi hingga jam 5 sore
-                                for (var i = 8; i <= 17; i++) {
-                                    var option = document.createElement("option");
-                                    option.text = i + ":00";
-                                    option.value = i + ":00";
-                                    jamPicker.appendChild(option);
-                                }
-                            } else {
-                                // Sembunyikan kontainer pilihan jam jika tidak ada tanggal yang dipilih
-                                jamPickerContainer.style.display = "none";
-                            }
-                        }
-                    });
-                </script>
-
-
-                <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" style="overflow-y: auto;">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -266,223 +208,187 @@
                             <div class="modal-body">
 
 
-                                <form action="" method="post">
+                                <form action="reservasi" method="post">
 
                                     @csrf
-                                    <div class="form-group
-                                <label for=" nama">Nama</label>
+                                    <div class="form-group">
+                                        <label for="nama">Nama Lengkap</label>
                                         <input type="text" class="form-control" id="nama" name="nama" required>
                                     </div>
-                                    <div class="form-group
-                                
-                                <label for=" email">Email</label>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
                                         <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
-                                    <div class="form-group
-                                    
-                                    <label for=" no_hp">No. HP</label>
+
+                                    <div class="form-group">
+                                        <label for="no_hp">No. HP</label>
                                         <input type="text" class="form-control" id="no_hp" name="no_hp" required>
                                     </div>
-                                    <div class="form-group
-
-                                    <label for=" alamat">Alamat</label>
+                                    <div class="form-group">
+                                        <label for="alamat">Alamat</label>
                                         <input type="text" class="form-control" id="alamat" name="alamat" required>
-
                                     </div>
-                                    <div class="form-group
-                                        
-                                        <label for=" tanggal">Tanggal</label>
-                                        <input type="text" class="form-control" id="tanggalpicker" name="tanggal" required>
-
+                                    <div class="form-group">
+                                        <label for="tanggal">Tanggal</label>
+                                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jamPicker">Waktu</label>
+                                        <select class="form-select" id="waktu" name="waktu" required>
+                                            @foreach($times as $time)
+                                            <option value="{{$time->waktu}}">{{$time->waktu}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Total Hrga">Total Harga</label>
+                                        <input type="text" class="form-control" name="subtotal" id="subtotal" value="Rp0" readonly>
                                     </div>
 
-                            </div>
+                                    <!-- Di dalam modal kedua -->
 
-                            <div class="modal-footer">
-                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Back</button>
+                                    <div class="form-group">
+                                        <table id="selectedItemsTable2" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama Layanan</th>
+                                                    <th>Kuantitas</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Baris tabel akan ditambahkan secara dinamis di sini -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- Di dalam modal kedua -->
+                                    <div class="form-group">
+                                        <h6 class="mb-2">SUMMARY</h6>
+                                        <div class="d-flex justify-content-between">
+                                            <span id="productName2"></span>
+                                            <span id="productPrice2"></span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <strong>Total Price</strong>
+                                            <span id="subtotalPrice2"></span>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back</button>
+                                        <button type="submit" class="btn btn-primary">Kirim</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 @endforeach
             </div>
         </div>
     </div>
     </div>
-    <!-- Favourite Places End -->
-    <!-- Video Start Arera -->
-    <div class="video-area video-bg pt-200 pb-200" data-background="{{asset('user/assets/img/service/video-bg.jpg')}}">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="video-caption text-center">
-                        <div class="video-icon">
-                            <a class="popup-video" href="https://www.youtube.com/watch?v=1aP-TXUpNoU" tabindex="0"><i class="fas fa-play"></i></a>
-                        </div>
-                        <p class="pera1">Love where you're going in the perfect time</p>
-                        <p class="pera2">Tripo is a World Leading Online</p>
-                        <p class="pera3"> Tour Booking Platform</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Video Start End -->
-    <!-- Support Company Start-->
-    <div class="support-company-area support-padding fix">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-xl-6 col-lg-6">
-                    <div class="support-location-img mb-50">
-                        <img src="{{asset('user/assets/img/service/support-img.jpg')}}" alt="">
-                        <div class="support-img-cap">
-                            <span>Since 1992</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6">
-                    <div class="right-caption">
-                        <!-- Section Tittle -->
-                        <div class="section-tittle section-tittle2">
-                            <span>About Our Company</span>
-                            <h2>We are Go Trip <br>Ravels Support Company</h2>
-                        </div>
-                        <div class="support-caption">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p>
-                            <div class="select-suport-items">
-                                <label class="single-items">Lorem ipsum dolor sit amet
-                                    <input type="checkbox" checked="checked active">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="single-items">Consectetur adipisicing sed do
-                                    <input type="checkbox" checked="checked active">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="single-items">Eiusmod tempor incididunt
-                                    <input type="checkbox" checked="checked active">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="single-items">Ad minim veniam, quis nostrud.
-                                    <input type="checkbox" checked="checked active">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <a href="#" class="btn border-btn">About us</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Support Company End-->
-    <!-- Testimonial Start -->
-    <!-- Testimonial Start -->
-    <div class="testimonial-area testimonial-padding" data-background="{{asset('user/assets/img/testmonial/testimonial_bg.jpg')}}">
-        <div class="container ">
-            <div class="row d-flex justify-content-center">
-                <div class="col-xl-11 col-lg-11 col-md-9">
-                    <div class="h1-testimonial-active">
-                        <!-- Single Testimonial -->
-                        <div class="single-testimonial text-center">
-                            <!-- Testimonial Content -->
-                            <div class="testimonial-caption ">
-                                <div class="testimonial-top-cap">
-                                    <img src="{{asset('user/assets/img/icon/testimonial.png')}}" alt="">
-                                    <p>Logisti Group is a representative logistics operator providing full range of ser
-                                        of customs clearance and transportation worl.</p>
-                                </div>
-                                <!-- founder -->
-                                <div class="testimonial-founder d-flex align-items-center justify-content-center">
-                                    <div class="founder-img">
-                                        <img src="{{asset('user/assets/img/testmonial/Homepage_testi.png')}}" alt="">
-                                    </div>
-                                    <div class="founder-text">
-                                        <span>Jessya Inn</span>
-                                        <p>Co Founder</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Testimonial -->
-                        <div class="single-testimonial text-center">
-                            <!-- Testimonial Content -->
-                            <div class="testimonial-caption ">
-                                <div class="testimonial-top-cap">
-                                    <img src="{{asset('user/assets/img/icon/testimonial.png')}}" alt="">
-                                    <p>Logisti Group is a representative logistics operator providing full range of ser
-                                        of customs clearance and transportation worl.</p>
-                                </div>
-                                <!-- founder -->
-                                <div class="testimonial-founder d-flex align-items-center justify-content-center">
-                                    <div class="founder-img">
-                                        <img src="{{asset('user/assets/img/testmonial/Homepage_testi.png')}}" alt="">
-                                    </div>
-                                    <div class="founder-text">
-                                        <span>Jessya Inn</span>
-                                        <p>Co Founder</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Testimonial End -->
-    <!-- Blog Area Start -->
-    <div class="home-blog-area section-padding2">
-        <div class="container">
-            <!-- Section Tittle -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-tittle text-center">
-                        <span>Our Recent news</span>
-                        <h2>Tourist Blog</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6">
-                    <div class="home-blog-single mb-30">
-                        <div class="blog-img-cap">
-                            <div class="blog-img">
-                                <img src="{{asset('user/assets/img/blog/home-blog1.jpg')}}" alt="">
-                            </div>
-                            <div class="blog-cap">
-                                <p> | Traveling</p>
-                                <h3><a href="single-blog.html">Tips For Taking A Long-Term Trip With Kids.</a></h3>
-                                <a href="#" class="more-btn">Read more »</a>
-                            </div>
-                        </div>
-                        <div class="blog-date text-center">
-                            <span>24</span>
-                            <p>Now</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6">
-                    <div class="home-blog-single mb-30">
-                        <div class="blog-img-cap">
-                            <div class="blog-img">
-                                <img src="{{asset('user/assets/img/blog/home-blog2.jpg')}}" alt="">
-                            </div>
-                            <div class="blog-cap">
-                                <p> | Traveling</p>
-                                <h3><a href="single-blog.html">Tips For Taking A Long-Term Trip With Kids.</a></h3>
-                                <a href="#" class="more-btn">Read more »</a>
-                            </div>
-                        </div>
-                        <div class="blog-date text-center">
-                            <span>24</span>
-                            <p>Now</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- kene -->
+    <script>
+        // Mendapatkan tanggal hari ini
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+
+        // Menetapkan tanggal minimum ke input tanggal
+        document.getElementById("tanggal").setAttribute("min", today);
+    </script>
+    <script>
+        function calculateSubtotal() {
+            var checkboxes = document.getElementsByName("service");
+            var subtotal = 0; // Inisialisasi subtotal dengan 0
+            var selectedItems = []; // Array untuk menyimpan item yang dipilih
+
+            // Tambahkan harga paket yang dipilih ke subtotal
+            var productPrice = parseFloat(document.getElementById("productPrice").textContent.replace("Rp", "").replace(".", ""));
+            subtotal += productPrice;
+
+            // Loop melalui setiap checkbox layanan tambahan
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    var price = parseFloat(checkboxes[i].value);
+                    var qty = parseFloat(checkboxes[i].parentNode.nextElementSibling.querySelector("input[name='qty']").value);
+                    subtotal += price * qty;
+
+                    // Dapatkan nama layanan tambahan
+                    var serviceName = checkboxes[i].parentNode.textContent.trim().split("-")[0].trim();
+                    // Tambahkan item yang dipilih ke dalam array
+                    selectedItems.push({
+                        name: serviceName,
+                        qty: qty
+                    });
+                }
+            }
+
+            // Tampilkan subtotal yang dihitung
+            document.getElementById("subtotalPrice").textContent = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById("subtotal").value = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+            // Tampilkan item-item yang dipilih dalam tabel
+            var selectedItemsTable = document.getElementById("selectedItemsTable");
+            var tbody = selectedItemsTable.getElementsByTagName("tbody")[0];
+            tbody.innerHTML = ""; // Kosongkan tabel sebelum menambahkan item
+
+            selectedItems.forEach(function(item) {
+                var row = tbody.insertRow();
+                var nameCell = row.insertCell(0);
+                var qtyCell = row.insertCell(1);
+
+                nameCell.textContent = item.name;
+                qtyCell.textContent = item.qty;
+            });
+        }
+    </script>
+
+
+    <script>
+        function copySummaryToNextModal() {
+            // Copy Total Price
+            var totalHarga = document.getElementById("subtotalPrice").textContent;
+            document.getElementById("subtotal").value = totalHarga;
+            // Copy Product Name
+            var productName = document.getElementById("productName").textContent;
+            document.getElementById("productName2").textContent = "Product: " + productName;
+
+            // Copy Product Price
+            var productPrice = document.getElementById("productPrice").textContent;
+            document.getElementById("productPrice2").textContent = "Price: " + productPrice;
+
+            // Copy Subtotal Price
+            var subtotalPrice = document.getElementById("subtotalPrice").textContent;
+            document.getElementById("subtotalPrice2").textContent = "Total Price: " + subtotalPrice;
+            // Copy Selected Items
+            var selectedItemsTable = document.getElementById("selectedItemsTable");
+            var selectedItems = selectedItemsTable.querySelectorAll("tbody tr");
+
+            var selectedItemsTable2 = document.getElementById("selectedItemsTable2");
+            var tbody = selectedItemsTable2.getElementsByTagName("tbody")[0];
+            tbody.innerHTML = ""; // Kosongkan tbody sebelum menambahkan item
+
+            selectedItems.forEach(function(item) {
+                var name = item.cells[0].textContent;
+                var qty = item.cells[1].textContent;
+                var newRow = tbody.insertRow();
+                var nameCell = newRow.insertCell(0);
+                var qtyCell = newRow.insertCell(1);
+                nameCell.textContent = name;
+                qtyCell.textContent = qty;
+            });
+        }
+    </script>
+
+
+
+
     <!-- Blog Area End -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-JU3MR4x4K5+dBsx2JDA4NZLaOg5frN1BKcpTi/YOYTC67J+1zCkXwXPMvtnJwZx" crossorigin="anonymous"></script>
 </main>

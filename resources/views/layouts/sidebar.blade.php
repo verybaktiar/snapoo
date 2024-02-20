@@ -13,7 +13,10 @@
                         <li><i class="fa fa-bars"></i><a href="#">Kategori</a></li>
                         <li><i class="fa fa-id-badge"></i><a href="/pelanggan">Data Pelanggan</a></li>
                         <li><i class="fa fa-puzzle-piece"></i><a href="/produk">Data Produk</a></li>
-                        <li><i class="fa fa-id-badge"></i><a href="/services">Data Service</a></li>
+                        <li><i class="fa fa-briefcase"></i><a href="/services">Data Service</a></li>
+                        <li><i class="fa fa-plus"></i><a href="/waktu">Data Waktu</a></li>
+                        <li><i class="fa fa-folder-open-o"></i><a href="/reservasi">Data Reservasi</a></li>
+
                        
                     </ul>
                 </li>

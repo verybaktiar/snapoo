@@ -37,34 +37,65 @@
     <div class="card mb-4">
         <!-- <form action="/produk/store" method="POST">
             @csrf -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data Produk</h6>
-            </div>
-            <div class="card-body">
-                <form action="/produk/store" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label for="nama">Nama Paket</label>
-                        <input type="text" class="form-control" name="nama_paket" id="nama_paket" placeholder="Nama Paket" autofocus required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nama">Harga</label>
-                        <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukan Harga" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="no_telp">Deskripsi</label>
-                        <input type="text" class="form-control" name="deskripsi" id="deskripsi" placeholder="Deskripsi Paket" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="formFile" class="form-label">Gambar</label>
-                      <input class="form-control" type="file" name="gambar" id="formFile">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data Produk</h6>
+        </div>
+        <div class="card-body">
+            <form action="/produk/store" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="nama">Nama Paket</label>
+                    <input type="text" class="form-control" name="nama_paket" id="nama_paket" placeholder="Nama Paket" autofocus required>
+                </div>
+                <div class="form-group">
+                    <label for="nama">Harga</label>
+                    <input type="text" class="form-control" name="harga" id="harga" placeholder="Masukan Harga" required>
+                </div>
+                <div class="form-group">
+                    <label for="no_telp">Deskripsi</label>
+                    <input type="text" class="form-control" name="deskripsi" id="deskripsi" placeholder="Deskripsi Paket" required>
+                </div>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Gambar</label>
+                    <input class="form-control" type="file" name="gambar" id="formFile">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
         </form>
     </div>
     <!--Row-->
+    <script>
+        // Ambil elemen form
+        const form = document.querySelector('form');
+
+        // Tambahkan event listener untuk event submit
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Hindari pengiriman form secara default
+
+            // Kirim data form menggunakan Fetch API atau Ajax
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData
+            });
+
+            // Pastikan respon adalah sukses
+            if (response.ok) {
+                // Tampilkan notifikasi atau pop-up berhasil
+                window.alert('Data berhasil ditambahkan!');
+
+                // Atau Anda dapat menggunakan notifikasi HTML/CSS yang lebih menarik
+                // Contoh: tampilkanNotifikasi('Data berhasil ditambahkan!');
+
+                // Reset form jika diperlukan
+                form.reset();
+            } else {
+                // Tampilkan pesan error jika terjadi masalah
+                window.alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
+        });
+    </script>
 
 
     @endsection

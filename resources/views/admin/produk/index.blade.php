@@ -40,6 +40,7 @@
                     <th>Keterangan</th>
                     <th>Harga</th>
                     <th>Gambar</th>
+                    <th>Kuota</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -51,37 +52,36 @@
                     <td>{{ $row->deskripsi }}</td>
                     <td>{{ $row->harga }}</td>
                     <td><img src="{{ asset('images/' . $row->gambar) }}" width="100px"></td>
+                    <td>{{$row->slot}}</td>
                     <td>
-                        <a href="{{ url('produk/edit/' . $row->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                        <a href="{{ url('produk/edit/' . $row->id_produk) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                         <!-- Link untuk membuka modal -->
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal{{$row->id}}">
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal{{$row->id_produk}}">
                             <i class="fa fa-trash-o"></i>
                         </a>
-
-                        
-
                     </td>
+                   
                     <!-- Modal konfirmasi -->
-                    <div class="modal fade" id="hapusModal{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel{{$row->id}}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="hapusModalLabel{{$row->id}}">Konfirmasi Hapus Data</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Apakah Anda yakin ingin menghapus data ini?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                        <!-- Link untuk menghapus data -->
-                                        <a href="{{ url('produk/hapus/' . $row->id) }}" class="btn btn-danger">Ya, Hapus</a>
-                                    </div>
+                    <div class="modal fade" id="hapusModal{{$row->id_produk}}" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel{{$row->id}}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="hapusModalLabel{{$row->id_produk}}">Konfirmasi Hapus Data</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Apakah Anda yakin ingin menghapus data ini?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                    <!-- Link untuk menghapus data -->
+                                    <a href="{{ url('produk/hapus/' . $row->id_produk) }}" class="btn btn-danger">Ya, Hapus</a>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </tr>
                 @endforeach
             </tbody>

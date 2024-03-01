@@ -27,6 +27,16 @@
                     <label for="no_telp">Deskripsi</label>
                     <input type="text" class="form-control" name="deskripsi" id="deskripsi" value="{{$data->deskripsi}}" placeholder="Deskripsi Paket" required>
                 </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Gambar</label>
+                    <input class="form-control" type="file" name="gambar" id="formFile">
+                </div>
+                <div class="form-group">
+                <label for="slot">Kuota</label>
+                <input type="text" class="form-control" name="slot" id="slot" value="{{$data->slot}}" placeholder="Kuota" required>
+            </div>
+
                
 
                 <button type="submit" class="btn btn-primary">Submit</button>

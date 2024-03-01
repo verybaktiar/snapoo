@@ -37,9 +37,9 @@ Route::post('pelanggan/importexcel', 'App\Http\Controllers\PelangganController@p
 Route::get('produk', 'App\Http\Controllers\ProdukController@index');
 Route::get('produk/tambah', 'App\Http\Controllers\ProdukController@tambah');
 Route::post('produk/store', 'App\Http\Controllers\ProdukController@store');
-Route::get('produk/edit/{id}', 'App\Http\Controllers\ProdukController@edit');
-Route::post('produk/{id}', 'App\Http\Controllers\ProdukController@update');
-Route::get('produk/hapus/{id}', 'App\Http\Controllers\ProdukController@hapus');
+Route::get('produk/edit/{id_produk}', 'App\Http\Controllers\ProdukController@edit');
+Route::post('produk/{id_produk}', 'App\Http\Controllers\ProdukController@update');
+Route::get('produk/hapus/{id_produk}', 'App\Http\Controllers\ProdukController@hapus');
 
 Route::get('services', 'App\Http\Controllers\ServicesController@index');
 Route::get('services/tambah', 'App\Http\Controllers\ServicesController@tambah');

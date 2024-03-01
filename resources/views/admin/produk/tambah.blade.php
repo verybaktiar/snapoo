@@ -59,6 +59,10 @@
                     <label for="formFile" class="form-label">Gambar</label>
                     <input class="form-control" type="file" name="gambar" id="formFile">
                 </div>
+                <div class="form-group">
+                    <label for="slot">Kuota Paket</label>
+                    <input type="number" class="form-control" name="slot" id="slot" placeholder="Kuota Paket" required>
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

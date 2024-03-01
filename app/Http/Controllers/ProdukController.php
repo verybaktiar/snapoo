@@ -30,14 +30,14 @@ class ProdukController extends Controller
         return redirect('produk')->with('pesan', 'Data berhasil ditambahkan');
        
     }
-    public function edit($id)
+    public function edit($id_produk)
     {
-        $data = Produk::find($id);
+        $data = Produk::find($id_produk);
         return view('admin.produk.edit', compact('data'));
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_produk)
     {
-        $data = Produk::find($id);
+        $data = Produk::find($id_produk);
         $data->update($request->all());
 
         if ($request->hasFile('gambar')) {
@@ -48,9 +48,9 @@ class ProdukController extends Controller
         return redirect('produk')->with('pesan', 'Data berhasil diupdate');
     }
 
-    public function hapus($id)
+    public function hapus($id_produk)
     {
-        $data = Produk::find($id);
+        $data = Produk::find($id_produk);
         $data->delete();
         return redirect('produk')->with('hapus', 'Data berhasil dihapus');
     }

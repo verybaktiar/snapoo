@@ -120,8 +120,8 @@
                             </div>
                             <div class="place-cap-bottom">
                                 <ul>
-                                    <li><i class="far fa-clock"></i>3 Days</li>
-                                    <li><i class="fas fa-map-marker-alt"></i>Los Angeles</li>
+                                    <li><i class="far fa-clock"></i>{{$product->slot}} Available</li>
+                                    <li><i class="fas fa-map-marker-alt"></i>SOS GACA</li>
                                 </ul>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <strong>Total Price</strong>
-                                        <span id="subtotalPrice">Rp0</span>
+                                        <span id="subtotalPrice">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
                                     </div>
                                     <!-- Modal "Select Service Extra" -->
                                     </tr>
@@ -206,8 +206,6 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-
-
                                 <form action="reservasi" method="post">
 
                                     @csrf
@@ -244,7 +242,7 @@
                                         <label for="Total Hrga">Total Harga</label>
                                         <input type="text" class="form-control" name="subtotal" id="subtotal" value="Rp0" readonly>
                                     </div>
-
+                                    
                                     <!-- Di dalam modal kedua -->
 
                                     <div class="form-group">
@@ -264,18 +262,15 @@
                                     <div class="form-group">
                                         <h6 class="mb-2">SUMMARY</h6>
                                         <div class="d-flex justify-content-between">
-                                            <span id="productName2"></span>
-                                            <span id="productPrice2"></span>
+                                        <input type="text" class="form-control" name="productName2" id="productName2" value="productName2"  style="border: none; background: transparent; padding: 0; margin: 0;" readonly>
+                                        <!-- <span id="productName2"></span> -->
+                                        <span id="productPrice2"></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <strong>Total Price</strong>
                                             <span id="subtotalPrice2"></span>
                                         </div>
                                     </div>
-
-
-
-
                                     <div class="modal-footer">
                                         <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back</button>
                                         <button type="submit" class="btn btn-primary">Kirim</button>
@@ -291,6 +286,8 @@
     </div>
     </div>
     <!-- kene -->
+
+
     <script>
         // Mendapatkan tanggal hari ini
         var today = new Date();
@@ -302,6 +299,7 @@
         // Menetapkan tanggal minimum ke input tanggal
         document.getElementById("tanggal").setAttribute("min", today);
     </script>
+    
     <script>
         function calculateSubtotal() {
             var checkboxes = document.getElementsByName("service");
@@ -356,8 +354,11 @@
             var totalHarga = document.getElementById("subtotalPrice").textContent;
             document.getElementById("subtotal").value = totalHarga;
             // Copy Product Name
+            // var productName = document.getElementById("productName").textContent;
+            // document.getElementById("productName2").textContent = "Product: " + productName;
+
             var productName = document.getElementById("productName").textContent;
-            document.getElementById("productName2").textContent = "Product: " + productName;
+            document.getElementById("productName2").value =productName;
 
             // Copy Product Price
             var productPrice = document.getElementById("productPrice").textContent;
@@ -386,8 +387,7 @@
         }
     </script>
 
-
-
+   
 
     <!-- Blog Area End -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-JU3MR4x4K5+dBsx2JDA4NZLaOg5frN1BKcpTi/YOYTC67J+1zCkXwXPMvtnJwZx" crossorigin="anonymous"></script>

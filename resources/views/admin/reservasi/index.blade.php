@@ -43,7 +43,7 @@
                         <th>Tanggal Reservasi</th>
                         <th>Waktu Reservasi</th>
                         <th>Total</th>
-                        <th>Nama Produk</th>
+                        <th>Nama Paket</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -92,7 +92,7 @@
                 <p>Tanggal Reservasi: {{ $reservasi->tanggal }}</p>
                 <p>Waktu Reservasi: {{ $reservasi->waktu }}</p>
                 <p>Total: {{ $reservasi->subtotal }}</p>
-                <p>Nama Produk: {{ $reservasi->productName2 }}</p>
+                <p>Nama Paket: {{ $reservasi->nama_paket }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

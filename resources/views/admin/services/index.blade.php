@@ -4,6 +4,24 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
+        @if(session()->has('pesan'))
+            <!-- Tampilkan pesan session dalam bentuk Toastr saat dokumen dimuat -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Panggil metode Toastr
+                    toastr.success("{{ session('pesan') }}");
+                });
+            </script>
+            @endif
+            @if(session()->has('hapus'))
+            <!-- Tampilkan pesan session dalam bentuk Toastr saat dokumen dimuat -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Panggil metode Toastr
+                    toastr.warning("{{ session('hapus') }}");
+                });
+            </script>
+            @endif
             <strong class="card-title">Data Pelanggan</strong>
             <div class="col-auto">
                 <a href="{{ url('services/tambah') }}" class="btn btn-primary my-3">Tambah Data Services Extra</a>
@@ -41,10 +59,34 @@
                     <td>{{ $service->keterangan }}</td>
                     <td>{{ $service->harga }}</td>
                     <td>
-                        <a href="/services/edit/{{ $service->id_services }}" class="btn btn-warning">Edit</a>
-                        <a href="/services/delete/{{ $service->id_services }}" class="btn btn-danger">Hapus</a>
+                        <a href="{{ url('services/edit/' . $service->id_services) }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                           <!-- Link untuk membuka modal -->
+                           <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal{{$service->id_services}}">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
                     </td>
                 </tr>
+                 <!-- Modal konfirmasi -->
+                 <div class="modal fade" id="hapusModal{{$service->id_services}}" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel{{$service->id_services}}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="hapusModalLabel{{$service->id_services}}">Konfirmasi Hapus Data</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Apakah Anda yakin ingin menghapus data ini?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                    <!-- Link untuk menghapus data -->
+                                    <a href="{{ url('services/hapus/' . $service->id_services) }}" class="btn btn-danger">Ya, Hapus</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
                
             </tbody>

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('user.welcome');
 // });
 
-Route::get('welcome', 'App\Http\Controllers\HomeController@index');
+Route::get('/', 'App\Http\Controllers\HomeController@index');
 
 Route::get('dashboard', 'App\Http\Controllers\DashboardController@index');
 Route::get('pelanggan', 'App\Http\Controllers\PelangganController@index');
@@ -45,7 +45,7 @@ Route::get('services', 'App\Http\Controllers\ServicesController@index');
 Route::get('services/tambah', 'App\Http\Controllers\ServicesController@tambah');
 Route::post('services/store', 'App\Http\Controllers\ServicesController@store');
 Route::get('services/edit/{id_services}', 'App\Http\Controllers\ServicesController@edit');
-Route::post('services/update', 'App\Http\Controllers\ServicesController@update');
+Route::post('services/{id_services}', 'App\Http\Controllers\ServicesController@update');
 Route::get('services/hapus/{id}', 'App\Http\Controllers\ServicesController@hapus');
 
 Route::get('waktu', 'App\Http\Controllers\WaktuController@index');
@@ -59,6 +59,7 @@ Route::get('times/getTimes', 'App\Http\Controllers\timesController@getTimes');
 
 Route::get('reservasi', 'App\Http\Controllers\ReservasiController@index');
 Route::post('reservasi', 'App\Http\Controllers\ReservasiController@tambah');
+Route::get('reservasi/hapus/{id_reservasi}', 'App\Http\Controllers\ReservasiController@hapus');
 
 
 

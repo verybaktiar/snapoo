@@ -20,7 +20,7 @@ class ReservasiController extends Controller
     
         // Buat reservasi baru
         $data = Reservasi::create($request->all());
-    
+        
         // Periksa apakah reservasi berhasil dibuat
         if ($data) {
             // Ambil nama paket dari data reservasi
@@ -40,7 +40,7 @@ class ReservasiController extends Controller
                     $produk->save();
     
                     // Redirect ke halaman welcome dengan pesan sukses
-                    return redirect('/welcome')->with('pesan', 'Reservasi berhasil ditambahkan');
+                    return redirect('/')->with('pesan', 'Reservasi berhasil ditambahkan');
                 } else {
                     // Jika stok tidak mencukupi, kembalikan dengan pesan kesalahan
                     return redirect()->back()->with('error', 'Stok tidak mencukupi untuk melakukan reservasi.');
@@ -53,6 +53,14 @@ class ReservasiController extends Controller
             // Jika reservasi gagal dibuat, kembalikan dengan pesan kesalahan
             return redirect()->back()->with('error', 'Gagal membuat reservasi. Silakan coba lagi.');
         }
+    }
+    
+
+    public function hapus($id_reservasi)
+    {
+        $data = Reservasi::find($id_reservasi);
+        $data->delete();
+        return redirect('reservasi')->with('hapus', 'Data berhasil dihapus');
     }
     
     

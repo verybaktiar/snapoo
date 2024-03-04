@@ -4,6 +4,24 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
+        @if(session()->has('pesan'))
+            <!-- Tampilkan pesan session dalam bentuk Toastr saat dokumen dimuat -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Panggil metode Toastr
+                    toastr.success("{{ session('pesan') }}");
+                });
+            </script>
+            @endif
+            @if(session()->has('hapus'))
+            <!-- Tampilkan pesan session dalam bentuk Toastr saat dokumen dimuat -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Panggil metode Toastr
+                    toastr.warning("{{ session('hapus') }}");
+                });
+            </script>
+            @endif
             <strong class="card-title">Data Reservasi</strong>
             <div class="col-auto">
                 <a href="{{ url('services/tambah') }}" class="btn btn-primary my-3">Tambah Data Services Extra</a>
@@ -40,15 +58,13 @@
                         <td>{{ $reservasi->tanggal }}</td>
                         <td>{{ $reservasi->waktu }}</td>
                         <td>{{ $reservasi->subtotal }}</td>
-                        <td>{{ $reservasi->productName2 }}</td>
+                        <td>{{ $reservasi->nama_paket }}</td>
                         <td>
-                            <a href="/reservasi/edit/{{ $reservasi->id_reservasi }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal{{$reservasi->nama}}">
-                                <i class="fa fa-trash-o"></i>
-                            </a>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal{{$reservasi->nama}}">
-                                Detail
-                            </button>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="/reservasi/edit/{{ $reservasi->id_reservasi }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal{{$reservasi->id_reservasi}}"><i class="fa fa-trash-o"></i></a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal{{$reservasi->id_reservasi}}"><i class="fa fa-eye"></i></button>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
@@ -59,11 +75,11 @@
 </div>
 
 @foreach($data as $reservasi)
-<div class="modal fade" id="detailModal{{$reservasi->nama}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel{{$reservasi->nama}}" aria-hidden="true">
+<div class="modal fade" id="detailModal{{$reservasi->id_reservasi}}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel{{$reservasi->id_reservasi}}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailModalLabel{{$reservasi->nama}}">Detail Reservasi</h5>
+                <h5 class="modal-title" id="detailModalLabel{{$reservasi->id_reservasi}}">Detail Reservasi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -86,11 +102,11 @@
 </div>
 @endforeach
 </td>
-<div class="modal fade" id="hapusModal{{$reservasi->nama}}" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel{{$reservasi->nama}}" aria-hidden="true">
+<div class="modal fade" id="hapusModal{{$reservasi->id_reservasi}}" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel{{$reservasi->id_reservasi}}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="hapusModalLabel{{$reservasi->nama}}">Konfirmasi Hapus Data</h5>
+                <h5 class="modal-title" id="hapusModalLabel{{$reservasi->id_reservasi}}">Konfirmasi Hapus Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -101,7 +117,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 <!-- Link untuk menghapus data -->
-                <a href="{{ url('produk/hapus/' . $reservasi->nama) }}" class="btn btn-danger">Ya, Hapus</a>
+                <a href="{{ url('reservasi/hapus/' . $reservasi->id_reservasi) }}" class="btn btn-danger">Ya, Hapus</a>
             </div>
         </div>
     </div>

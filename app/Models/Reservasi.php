@@ -9,5 +9,6 @@ class Reservasi extends Model
 {
     use HasFactory;
     protected $table = 'reservasi';
-    protected $fillable = ['id_reservasi','nama','email','no_hp','alamat','tanggal','waktu','subtotal','productName2'];
+    protected $fillable = ['id_reservasi','nama','email','no_hp','alamat','tanggal','waktu','subtotal','nama_paket'];
+    protected $primaryKey = "id_reservasi";
 }

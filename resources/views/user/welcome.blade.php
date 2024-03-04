@@ -1,7 +1,6 @@
 @extends('layouts.user.app')
 @section('contents')
 <main>
-
     <!-- slider Area Start-->
     <div class="slider-area ">
         <!-- Mobile Menu -->
@@ -29,7 +28,7 @@
                                         <select name="paket" id="select1">
                                             <option value="">Pilih Paket</option>
                                             @foreach ($data as $paket)
-                                            <option value="{{ $paket->id }}">{{ $paket->nama_paket }}</option> <!-- Sesuaikan dengan atribut dari model Paket -->
+                                            <option value="{{ $paket->id }}">{{ $paket->nama_paket }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -115,8 +114,7 @@
                         <div class="place-cap">
                             <div class="place-cap-top">
                                 <span><i class="fas fa-star"></i><span>8.0 Superb</span> </span>
-                                <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button> -->
-                                <h3><a href="#" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">{{$product->nama_paket}}</a></h3>
+                                <h3><a href="#" data-bs-target="#exampleModalToggle{{$product->id_produk}}" data-bs-toggle="modal">{{$product->nama_paket}}</a></h3>
                             </div>
                             <div class="place-cap-bottom">
                                 <ul>
@@ -128,11 +126,11 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="overflow-y: auto;">
+                <div class="modal fade" id="exampleModalToggle{{$product->id_produk}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel{{$product->id_produk}}" tabindex="-1" style="overflow-y: auto;">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Select Service Extra</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel{{$product->id_produk}}">Select Service Extra</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -142,11 +140,11 @@
                                             @foreach($services as $service)
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="service" value="{{$service->harga}}" onchange="calculateSubtotal()">
+                                                    <input type="checkbox" name="service{{$product->id_produk}}" value="{{$service->harga}}" onchange="calculateSubtotal({{$product->id_produk}})">
                                                     {{$service->nama_service}} - {{$service->harga}}
                                                 </td>
                                                 <td>
-                                                    <input type="number" name="qty" value="1" min="1" max="10" onchange="calculateSubtotal(this)">
+                                                    <input type="number" name="qty{{$product->id_produk}}" value="1" min="1" max="10" onchange="calculateSubtotal({{$product->id_produk}})">
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -154,11 +152,9 @@
                                     </table>
                                 </div>
                                 <div class="d-flex flex-column mb-3">
-
-                                    <!-- Tampilkan item yang dipilih -->
                                     <div class="d-flex flex-column mb-3">
                                         <h6 class="mb-2">Selected Items</h6>
-                                        <table id="selectedItemsTable" class="table">
+                                        <table id="selectedItemsTable{{$product->id_produk}}" class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Nama Layanan</th>
@@ -172,42 +168,30 @@
                                     </div>
                                     <h6 class="mb-2">SUMMARY</h6>
                                     <div class="d-flex justify-content-between">
-                                        <span id="productName">{{$product->nama_paket}}</span>
-                                        <span id="productPrice">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
+                                        <span id="productName{{$product->id_produk}}">{{$product->nama_paket}}</span>
+                                        <span id="productPrice{{$product->id_produk}}">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <strong>Total Price</strong>
-                                        <span id="subtotalPrice">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
-                                    </div>
-                                    <!-- Modal "Select Service Extra" -->
-                                    </tr>
-                                    <div class="d-flex flex-column">
-                                        </tr>
-                                        </tbody>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
+                                        <span id="subtotalPrice{{$product->id_produk}}">Rp{{ number_format($product->harga, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="modal-footer">
-                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">NEXT STEPS</button>
-                            </div> -->
                             <div class="modal-footer">
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle2" onclick="copySummaryToNextModal()">NEXT STEPS</button>
+                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2{{$product->id_produk}}" data-bs-toggle="modal" onclick="copySummaryToNextModal({{$product->id_produk}})">NEXT STEPS</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" style="overflow-y: auto;">
+                <div class="modal fade" id="exampleModalToggle2{{$product->id_produk}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2{{$product->id_produk}}" tabindex="-1" style="overflow-y: auto;">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Isi Form Reservasi</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2{{$product->id_produk}}">Isi Form Reservasi</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form action="reservasi" method="post">
-
                                     @csrf
                                     <div class="form-group">
                                         <label for="nama">Nama Lengkap</label>
@@ -217,7 +201,6 @@
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="no_hp">No. HP</label>
                                         <input type="text" class="form-control" id="no_hp" name="no_hp" required>
@@ -231,7 +214,7 @@
                                         <input type="date" class="form-control" id="tanggal" name="tanggal" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="jamPicker">Waktu</label>
+                                        <label for="waktu">Waktu</label>
                                         <select class="form-select" id="waktu" name="waktu" required>
                                             @foreach($times as $time)
                                             <option value="{{$time->waktu}}">{{$time->waktu}}</option>
@@ -239,14 +222,15 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="Total Hrga">Total Harga</label>
-                                        <input type="text" class="form-control" name="subtotal" id="subtotal" value="Rp0" readonly>
+                                        <label for="subtotal{{$product->id_produk}}">Subtotal</label>
+                                        <input type="text" class="form-control" name="subtotal" id="subtotal{{$product->id_produk}}" value="Rp0" readonly>
                                     </div>
-                                    
-                                    <!-- Di dalam modal kedua -->
 
+
+
+                                    <!-- Di dalam modal kedua -->
                                     <div class="form-group">
-                                        <table id="selectedItemsTable2" class="table">
+                                        <table id="selectedItemsTable2{{$product->id_produk}}" class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Nama Layanan</th>
@@ -262,17 +246,16 @@
                                     <div class="form-group">
                                         <h6 class="mb-2">SUMMARY</h6>
                                         <div class="d-flex justify-content-between">
-                                        <input type="text" class="form-control" name="productName2" id="productName2" value="productName2"  style="border: none; background: transparent; padding: 0; margin: 0;" readonly>
-                                        <!-- <span id="productName2"></span> -->
-                                        <span id="productPrice2"></span>
+                                            <input type="text" class="form-control" name="nama_paket" id="nama_paket{{$product->id_produk}}" value="nama_paket" style="border: none; background: transparent; padding: 0; margin: 0;" readonly>
+                                            <span id="productPrice2{{$product->id_produk}}"></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <strong>Total Price</strong>
-                                            <span id="subtotalPrice2"></span>
+                                            <span id="subtotalPrice2{{$product->id_produk}}"></span>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back</button>
+                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle{{$product->id_produk}}" data-bs-toggle="modal">Back</button>
                                         <button type="submit" class="btn btn-primary">Kirim</button>
                                     </div>
                                 </form>
@@ -286,110 +269,86 @@
     </div>
     </div>
     <!-- kene -->
-
-
-    <script>
-        // Mendapatkan tanggal hari ini
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        today = yyyy + '-' + mm + '-' + dd;
-
-        // Menetapkan tanggal minimum ke input tanggal
-        document.getElementById("tanggal").setAttribute("min", today);
-    </script>
-    
-    <script>
-        function calculateSubtotal() {
-            var checkboxes = document.getElementsByName("service");
-            var subtotal = 0; // Inisialisasi subtotal dengan 0
-            var selectedItems = []; // Array untuk menyimpan item yang dipilih
-
-            // Tambahkan harga paket yang dipilih ke subtotal
-            var productPrice = parseFloat(document.getElementById("productPrice").textContent.replace("Rp", "").replace(".", ""));
-            subtotal += productPrice;
-
-            // Loop melalui setiap checkbox layanan tambahan
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    var price = parseFloat(checkboxes[i].value);
-                    var qty = parseFloat(checkboxes[i].parentNode.nextElementSibling.querySelector("input[name='qty']").value);
-                    subtotal += price * qty;
-
-                    // Dapatkan nama layanan tambahan
-                    var serviceName = checkboxes[i].parentNode.textContent.trim().split("-")[0].trim();
-                    // Tambahkan item yang dipilih ke dalam array
-                    selectedItems.push({
-                        name: serviceName,
-                        qty: qty
-                    });
-                }
-            }
-
-            // Tampilkan subtotal yang dihitung
-            document.getElementById("subtotalPrice").textContent = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-            document.getElementById("subtotal").value = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-
-            // Tampilkan item-item yang dipilih dalam tabel
-            var selectedItemsTable = document.getElementById("selectedItemsTable");
-            var tbody = selectedItemsTable.getElementsByTagName("tbody")[0];
-            tbody.innerHTML = ""; // Kosongkan tabel sebelum menambahkan item
-
-            selectedItems.forEach(function(item) {
-                var row = tbody.insertRow();
-                var nameCell = row.insertCell(0);
-                var qtyCell = row.insertCell(1);
-
-                nameCell.textContent = item.name;
-                qtyCell.textContent = item.qty;
-            });
-        }
-    </script>
-
-
-    <script>
-        function copySummaryToNextModal() {
-            // Copy Total Price
-            var totalHarga = document.getElementById("subtotalPrice").textContent;
-            document.getElementById("subtotal").value = totalHarga;
-            // Copy Product Name
-            // var productName = document.getElementById("productName").textContent;
-            // document.getElementById("productName2").textContent = "Product: " + productName;
-
-            var productName = document.getElementById("productName").textContent;
-            document.getElementById("productName2").value =productName;
-
-            // Copy Product Price
-            var productPrice = document.getElementById("productPrice").textContent;
-            document.getElementById("productPrice2").textContent = "Price: " + productPrice;
-
-            // Copy Subtotal Price
-            var subtotalPrice = document.getElementById("subtotalPrice").textContent;
-            document.getElementById("subtotalPrice2").textContent = "Total Price: " + subtotalPrice;
-            // Copy Selected Items
-            var selectedItemsTable = document.getElementById("selectedItemsTable");
-            var selectedItems = selectedItemsTable.querySelectorAll("tbody tr");
-
-            var selectedItemsTable2 = document.getElementById("selectedItemsTable2");
-            var tbody = selectedItemsTable2.getElementsByTagName("tbody")[0];
-            tbody.innerHTML = ""; // Kosongkan tbody sebelum menambahkan item
-
-            selectedItems.forEach(function(item) {
-                var name = item.cells[0].textContent;
-                var qty = item.cells[1].textContent;
-                var newRow = tbody.insertRow();
-                var nameCell = newRow.insertCell(0);
-                var qtyCell = newRow.insertCell(1);
-                nameCell.textContent = name;
-                qtyCell.textContent = qty;
-            });
-        }
-    </script>
-
-   
-
-    <!-- Blog Area End -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-JU3MR4x4K5+dBsx2JDA4NZLaOg5frN1BKcpTi/YOYTC67J+1zCkXwXPMvtnJwZx" crossorigin="anonymous"></script>
 </main>
 @endsection
+
+<script>
+    // Mendapatkan tanggal hari ini
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
+    // Menetapkan tanggal minimum ke input tanggal
+    document.getElementById("tanggal").setAttribute("min", today);
+</script>
+
+<script>
+    function calculateSubtotal(id_produk) {
+        var checkboxes = document.getElementsByName("service" + id_produk);
+        var subtotal = parseFloat(document.getElementById("productPrice" + id_produk).textContent.replace("Rp", "").replace(".", ""));
+
+        var selectedItems = [];
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                var price = parseFloat(checkboxes[i].value);
+                var qty = parseFloat(document.getElementsByName("qty" + id_produk)[i].value);
+                subtotal += price * qty;
+
+                var serviceName = checkboxes[i].parentNode.textContent.trim().split("-")[0].trim();
+                selectedItems.push({
+                    name: serviceName,
+                    qty: qty
+                });
+            }
+        }
+
+        document.getElementById("subtotalPrice" + id_produk).textContent = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        // Memperbarui subtotal keseluruhan
+        document.getElementById("subtotal" + id_produk).value = "Rp" + subtotal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+        var selectedItemsTable = document.getElementById("selectedItemsTable" + id_produk).getElementsByTagName("tbody")[0];
+        selectedItemsTable.innerHTML = "";
+
+        selectedItems.forEach(function(item) {
+            var row = selectedItemsTable.insertRow();
+            var nameCell = row.insertCell(0);
+            var qtyCell = row.insertCell(1);
+
+            nameCell.textContent = item.name;
+            qtyCell.textContent = item.qty;
+        });
+    }
+</script>
+
+<script>
+    function copySummaryToNextModal(id_produk) {
+        // var productName = document.getElementById("productName" + id_produk).textContent;
+        // document.getElementById("productName2" + id_produk).value = productName;
+
+
+        var productName = document.getElementById("productName" + id_produk).textContent;
+        document.getElementById("nama_paket" + id_produk).value = productName;
+
+        var productPrice = document.getElementById("productPrice" + id_produk).textContent;
+        document.getElementById("productPrice2" + id_produk).textContent = "Price: " + productPrice;
+
+        var subtotalPrice = document.getElementById("subtotalPrice" + id_produk).textContent;
+        document.getElementById("subtotalPrice2" + id_produk).textContent = "Total Price: " + subtotalPrice;
+
+        var selectedItemsTable = document.getElementById("selectedItemsTable" + id_produk).getElementsByTagName("tbody")[0];
+        var selectedItemsTable2 = document.getElementById("selectedItemsTable2" + id_produk).getElementsByTagName("tbody")[0];
+        selectedItemsTable2.innerHTML = "";
+
+        for (var i = 0; i < selectedItemsTable.rows.length; i++) {
+            var newRow = selectedItemsTable2.insertRow();
+            var nameCell = newRow.insertCell(0);
+            var qtyCell = newRow.insertCell(1);
+
+            nameCell.textContent = selectedItemsTable.rows[i].cells[0].textContent;
+            qtyCell.textContent = selectedItemsTable.rows[i].cells[1].textContent;
+        }
+    }
+</script>

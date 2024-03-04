@@ -34,9 +34,9 @@ class ServicesController extends Controller
         return view('admin.services.edit', compact('services'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_services)
     {
-        $services = Services::find($id);
+        $services = Services::find($id_services);
         $services->update($request->all());
 
         return redirect('services')->with('pesan', 'Data berhasil diupdate');
